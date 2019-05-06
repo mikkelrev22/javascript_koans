@@ -62,9 +62,7 @@ describe("About Applying What We Have Learnt", function() {
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
 
-    var sum = .chain()
-              .range(1, 1000)
-              .reduce(function (sum, x) { return i % 3 === 0 || i % 5 === 0})
+    var sum =   _.range(1, 1000).filter(x => x %3 ===0|| x % 5 ===0).reduce((y, x) => {return y + x});
     /* try chaining range() and reduce() */
 
     expect(sum).toBe(233168);
@@ -80,15 +78,34 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
-
+    var ingredientCount = { "{ingredient name}": 0 }
+    _(products).chain()
+        .map(products => products.ingredients)
+        .flatten()
+        .reduce((y, u) =>
+          ingredientCount[u] = (ingredientCount[u] || 0) + 1)
+        .value();
     /* chain() together map(), flatten() and reduce() */
-
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    
+    //i: array of objects (pizza types)
+    //o: number value for each type of ingredient
+    //rest: ?
+    //strat: array of objects--> array of ingredients inside an array-->array of ingredietnts-->  
+    //trans:
+    //stub:  
+    /*
+    
+       ["artichoke", "sundried tomatoes", "mushrooms", "roma", "sundried tomatoes", "goats cheese", "rosemary",
+       "black beans", "jalapenos", "mushrooms"
+       "blue cheese", "garlic", "walnuts"
+       "spinach", "kalamata olives", "sesame seeds"]
+    ;
+    */  
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
